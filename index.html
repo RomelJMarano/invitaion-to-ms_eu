@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>February 14</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #f5f5f5;
+            overflow: hidden;
+        }
+
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: float 8s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 4px;
+            padding: 80px 60px;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.2s forwards;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .accent-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f5f5f5, transparent);
+            opacity: 0.3;
+            animation: lineGrow 1.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes lineGrow {
+            to {
+                width: 100%;
+            }
+        }
+
+        .date-header {
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 300;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out 0.8s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 42px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #f5f5f5;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out 1s forwards;
+            cursor: default;
+            transition: all 0.3s ease;
+        }
+
+        h1:hover {
+            color: #ff6b9d;
+            transform: scale(1.05);
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #999;
+            margin-bottom: 50px;
+            font-weight: 300;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out 1.2s forwards;
+        }
+
+        .details {
+            border-top: 1px solid #222;
+            padding-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+            padding: 8px;
+            border-radius: 2px;
+        }
+
+        .detail-row:nth-child(1) {
+            animation: slideInRow 0.5s ease-out 1.4s forwards;
+        }
+
+        .detail-row:nth-child(2) {
+            animation: slideInRow 0.5s ease-out 1.6s forwards;
+        }
+
+        .detail-row:nth-child(3) {
+            animation: slideInRow 0.5s ease-out 1.8s forwards;
+        }
+
+        @keyframes slideInRow {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .detail-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .detail-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+        }
+
+        .detail-value {
+            color: #f5f5f5;
+            text-align: right;
+            transition: color 0.3s ease;
+        }
+
+        .detail-row:hover .detail-value {
+            color: #ff6b9d;
+        }
+
+        .btn {
+            width: 100%;
+            background: #f5f5f5;
+            color: #0a0a0a;
+            border: none;
+            padding: 18px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: slideIn 0.6s ease-out 2s forwards;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 107, 157, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Certificate Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .certificate {
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 4px;
+            padding: 35px 50px;
+            max-width: 850px;
+            width: 100%;
+            text-align: center;
+            animation: certificateSlide 0.6s ease-out;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes certificateSlide {
+            from {
+                transform: scale(0.8) translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #ff6b9d;
+            opacity: 0.2;
+            margin: 12px;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .cert-ornament {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.25;
+            color: #ff6b9d;
+        }
+
+        .cert-ornament.top-left {
+            top: 25px;
+            left: 25px;
+        }
+
+        .cert-ornament.top-right {
+            top: 25px;
+            right: 25px;
+        }
+
+        .cert-ornament.bottom-left {
+            bottom: 25px;
+            left: 25px;
+        }
+
+        .cert-ornament.bottom-right {
+            bottom: 25px;
+            right: 25px;
+        }
+
+        .cert-header {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .cert-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 38px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ff6b9d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .cert-subtitle {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .cert-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 30px;
+            color: #f5f5f5;
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            position: relative;
+        }
+
+        .cert-name::before,
+        .cert-name::after {
+            content: '❤';
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 20px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        .cert-name::before {
+            left: 20px;
+        }
+
+        .cert-name::after {
+            right: 20px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .cert-message {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #999;
+            margin: 20px 0 25px;
+            font-weight: 300;
+        }
+
+        .countdown-section {
+            margin: 25px 0;
+            padding: 20px 30px;
+            background: rgba(255, 107, 157, 0.05);
+            border-radius: 4px;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+        }
+
+        .countdown-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            color: #ff6b9d;
+            line-height: 1;
+            margin-bottom: 6px;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .countdown-unit {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .cert-footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+
+        .cert-date {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .cert-signature {
+            font-family: 'DM Serif Display', serif;
+            font-size: 20px;
+            color: #888;
+            margin-top: 12px;
+        }
+
+        .close-btn {
+            margin-top: 25px;
+            background: transparent;
+            border: 1px solid #333;
+            color: #f5f5f5;
+            padding: 12px 40px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .close-btn:hover {
+            border-color: #ff6b9d;
+            background: #ff6b9d;
+            color: #0a0a0a;
+            transform: scale(1.05);
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 1s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 60px 40px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .certificate {
+                padding: 40px 25px;
+            }
+
+            .cert-title {
+                font-size: 32px;
+            }
+
+            .cert-name {
+                font-size: 22px;
+            }
+
+            .cert-message {
+                font-size: 14px;
+            }
+
+            .cert-name::before,
+            .cert-name::after {
+                font-size: 16px;
+            }
+
+            .cert-name::before {
+                left: 5px;
+            }
+
+            .cert-name::after {
+                right: 5px;
+            }
+
+            .countdown-value {
+                font-size: 32px;
+            }
+
+            .countdown {
+                gap: 20px;
+            }
+
+            .countdown-section {
+                padding: 20px;
+            }
+
+            .cert-ornament {
+                font-size: 18px;
+            }
+
+            .cert-ornament.top-left,
+            .cert-ornament.top-right,
+            .cert-ornament.bottom-left,
+            .cert-ornament.bottom-right {
+                top: 20px;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="hearts"></div>
+
+    <div class="container">
+        <div class="card" id="card">
+            <div class="accent-line"></div>
+           
+            <div class="date-header">14 February 2026</div>
+           
+            <h1 id="title">Dinner at six?</h1>
+           
+            <p class="message">
+                I'd like to take you somewhere special. No pressure, just good food and good company.
+            </p>
+           
+            <div class="details">
+                <div class="detail-row">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value">February 14, 2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Where</span>
+                    <span class="detail-value">Black Scoop Cafe</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">What</span>
+                    <span class="detail-value">Valentine's Date</span>
+                </div>
+            </div>
+           
+            <button class="btn" onclick="respond()">
+                <span>Count me in</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="certificate">
+            <div class="cert-ornament top-left">✦</div>
+            <div class="cert-ornament top-right">✦</div>
+            <div class="cert-ornament bottom-left">✦</div>
+            <div class="cert-ornament bottom-right">✦</div>
+
+            <div class="cert-header">Official Certificate of Acceptance</div>
+            
+            <div class="cert-title">Accepted</div>
+            
+            <div class="cert-subtitle">This certifies that</div>
+            
+            <div class="cert-name">Ms. Emelyn S. Ulanday</div>
+            
+            <p class="cert-message">
+                has graciously accepted an invitation from <strong style="color: #f5f5f5;">Mr. Romel J. Maraño</strong><br>
+                for a Valentine's evening at Black Scoop Cafe<br>
+                on the 14th of February, 2026.<br>
+                This certificate validates her reservation for an unforgettable night.
+            </p>
+            
+            <div class="countdown-section">
+                <div class="countdown-label">Time Until Our Date</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">0</div>
+                        <div class="countdown-unit">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">0</div>
+                        <div class="countdown-unit">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">0</div>
+                        <div class="countdown-unit">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">0</div>
+                        <div class="countdown-unit">Seconds</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cert-footer">
+                <div class="cert-date">Issued on February 7, 2026</div>
+                <div class="cert-signature">Mr. Romel J. Maraño</div>
+            </div>
+            
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 2000);
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createHeart, i * 400);
+        }
+
+        // Create sparkles effect
+        function createSparkles(x, y) {
+            for (let i = 0; i < 12; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = x + (Math.random() - 0.5) * 100 + 'px';
+                sparkle.style.top = y + (Math.random() - 0.5) * 100 + 'px';
+                sparkle.style.animationDelay = (Math.random() * 0.3) + 's';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+        // Confetti effect
+        function createConfetti(x, y) {
+            const colors = ['#ff6b9d', '#f5f5f5', '#ffd700', '#ff1493', '#ff69b4'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = `translate(${(Math.random() - 0.5) * 300}px, 0) rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        // Countdown Timer
+        function updateCountdown() {
+            const targetDate = new Date('February 14, 2026 19:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            } else {
+                document.getElementById('countdown').innerHTML = '<div class="countdown-value">It\'s time! ❤️</div>';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Response function
+        function respond() {
+            const btn = event.target.closest('.btn');
+            const rect = btn.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            
+            createConfetti(x, y);
+            
+            setTimeout(() => {
+                document.getElementById('modal').classList.add('show');
+            }, 600);
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Enhanced 3D tilt effect
+        const card = document.getElementById('card');
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - window.innerWidth / 2) / 50;
+            mouseY = (e.clientY - window.innerHeight / 2) / 50;
+        });
+
+        function animate() {
+            currentX += (mouseX - currentX) * 0.1;
+            currentY += (mouseY - currentY) * 0.1;
+            
+            card.style.transform = `perspective(1000px) rotateY(${currentX}deg) rotateX(${-currentY}deg)`;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Add click sparkles to card
+        card.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'BUTTON') {
+                createSparkles(e.clientX, e.clientY);
+            }
+        });
+    </script>
+</body>
+</html>
